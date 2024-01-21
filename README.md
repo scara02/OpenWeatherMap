@@ -5,21 +5,13 @@ OpenWeatherMap provides real-time weather information along with air quality ind
 ## Setup
 
 1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/scara02/OpenWeatherMap.git
-   ```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Start the server:**
+2. **Start the server:**
    ```bash
    node app.js
    ```
 
-4. **Access the application:**
+3. **Access the application:**
    Open your web browser and go to http://localhost:3000.
 
 ## API Usage
