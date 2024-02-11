@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const userModel = require('./models/userModel')
 const weatherModel = require('./models/weatherModel')
 const newsModel = require('./models/newsModel')
+const MongoStore = require('connect-mongo')
 
 dotenv.config()
 
@@ -27,6 +28,7 @@ app.use(session({
     cookie: {
         expires: expire,
     },
+    store: MongoStore.create({mongoUrl})
 }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
