@@ -3,10 +3,16 @@ const https = require('https');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session')
+const dotenv = require('dotenv')
 const mongoose = require('mongoose');
 const userModel = require('./models/userModel')
 const weatherModel = require('./models/weatherModel')
 const newsModel = require('./models/newsModel')
+
+dotenv.config()
+
+const port = process.env.PORT || 3000 
+const mongoUrl = process.env.MONGO_URL
 
 const app = express();
 
@@ -343,11 +349,11 @@ app.post('/news', async (req, res) => {
     res.redirect(`/news/${city}`)
 });
 
-app.listen(3000, () => {
-    console.log('server is running on port 3000');
+app.listen(port, () => {
+    console.log('server is running on port ' + port);
 });
 
-mongoose.connect("mongodb+srv://adel:kalieva@cluster.bya5pep.mongodb.net/ass3?retryWrites=true&w=majority")
+mongoose.connect(mongoUrl)
     .then(() => console.log("MongoDB connection established..."))
     .catch((error) => console.error("MongoDB connection failed:", error.message));
 
