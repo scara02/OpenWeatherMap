@@ -1,0 +1,119 @@
+html, body {
+    min-height: 100vh;
+}
+
+body {
+    background-image: linear-gradient(15deg, #d59fff 30%, #659cfd 70%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main {
+    margin: 20px 0px;
+}
+
+footer {
+    background-color: #687fda8e;
+    padding: 15px;
+    color: white;
+    text-align: center;
+}
+
+.container {
+    color: white;
+}
+
+.navbar {
+    background-color: #687fda8e;
+    padding: 15px;
+    color: white;
+}
+
+.navbar a {
+    color: white;
+    margin: 0px 20px;
+}
+
+.input-group {
+    background-color: white;
+    display: flex;
+    border-radius: 100px;
+    padding: 10px;
+}
+
+#city {
+    border: 0;
+    box-shadow: none;
+    margin: 0px 10px;
+}
+
+#search {
+    color: white;
+    background-color: #659cfd;
+    border-radius: 100px;
+    max-width: 150px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info a {
+    margin-left: 10px;
+}
+
+.list-entry {
+    color: white;
+    background-color: rgba(117, 108, 216, 0.509);
+    border: 1px solid;
+    padding: 10px;
+}
+
+#auth {
+    background-color: #4f509152;
+    padding: 50px;
+    border-radius: 70px;
+    justify-content: center;
+}
+
+#auth button {
+    background-color:#2b2c7184;
+    color: white;
+    width: 100%;
+}
+
+#auth a {
+    color: white;
+}
+
+#auth a:hover {
+    color: rgb(253, 161, 245);
+}
+
+.card {
+    border:none;
+}
+
+.card-header {
+    background-color: #3f82f5c3;
+}
+
+#add button {
+    background-color:#2b2c7184;
+    color: white;
+    width: 100%;
+}
+
+#add button:hover {
+    background-color:#16175284;
+}
+
+.btn-update {
+    background-color:#2b2c7184;
+    color: white;
+    width: 30%;
+}
+
+.btn-update:hover {
+    background-color:#11123b84;
+}

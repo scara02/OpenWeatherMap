@@ -1,6 +1,6 @@
 # OpenWeatherMap
 
-OpenWeatherMap provides real-time weather information along with air quality index data shown on the map.
+OpenWeatherMap provides real-time weather information with map functionality. Also retrivies recent news based on the keyword you provide.
 
 ## Setup
 
@@ -32,5 +32,8 @@ The WeatherMap application leverages the following APIs:
 2. **Google Maps JavaScript API:**
    - Integrates map into the application.
 
-3. **AQICN API:**
-   - Retrieves air quality index data.
+3. **News API:**
+   - Retrieves news based on the keyword.
+
+4. **Restcountries API:**
+   - Retrieves country information.

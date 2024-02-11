@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <div class="container my-5 col-xl-4 col-md-6 col-8" id="auth">
+        <div class="container text-center">
+            <h3><%= user %> Login</h3>
+            <% if (typeof error !=='undefined' ) { %>
+                <p>
+                    <%= error %>
+                </p>
+                <% } %>
+        </div>
+        <form action="/login<%= user %>" method="post" class="text-center">
+            <div class="form-group my-2">
+                <input type="text" name="username" class="form-control my-3" placeholder="username">
+            </div>
+            <div class="form-group my-2">
+                <input type="password" name="password" class="form-control my-3" placeholder="password">
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <% if (user == 'User') { %>
+                <p class="mt-2">Don't have an account? <a href="/register">Sign up</a>.</p>
+                <% } %>
+        </form>
+    </div>
+
+</body>
+
+</html>
