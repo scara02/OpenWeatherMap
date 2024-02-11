@@ -257,7 +257,7 @@ app.post('/weather', async (req, res) => {
 
         await newWeatherData.save();
 
-        res.redirect(`/weather/${city}`)
+        return res.redirect(`/weather/${city}`)
     } else {
         res.redirect(`/weather/${city}`)
     }
@@ -339,7 +339,7 @@ app.post('/news', async (req, res) => {
 
                     newNewsData.save();
 
-                    res.redirect(`/news/${city}`)
+                    return res.redirect(`/news/${city}`)
                 } catch (error) {
                     console.error('Error saving news data to MongoDB:', error);
                     res.status(500).json({ error: 'Internal Server Error' });
