@@ -11,7 +11,7 @@ const newsModel = require('./models/newsModel')
 
 dotenv.config()
 
-const port = process.env.PORT || 3000 
+const port = process.env.PORT || 3000
 const mongoUrl = process.env.MONGO_URL
 
 const app = express();
@@ -212,54 +212,66 @@ app.post('/weather', async (req, res) => {
     console.log(city)
 
     const username = req.session.username
-    const user = await userModel.findOne({ username })
+    try {
+        const user = await userModel.findOne({ username });
 
-    const existingWeatherData = await weatherModel.findOne({
-        userId: user._id,
-        city: city,
-        createdAt: { $gte: new Date(Date.now() - ONE_HOUR) },
-    });
-
-    if (!existingWeatherData) {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&units=metric`);
-        const weatherData = await response.json();
-
-        let flag = ''
-        try {
-            let country_info = await fetch('https://restcountries.com/v3.1/alpha/' + weatherData.sys.country);
-            
-            if (!country_info.ok) {
-                throw new Error(`Failed to fetch country information. Status: ${country_info.status}`);
-            }
-        
-            country_info = await country_info.json();
-
-            flag = country_info[0].flags.png
-        } catch (error) {
-            console.error('Error fetching country information:', error);
+        if (!user) {
+            res.render('index', { username, data: null });
+            return;
         }
-        
-        const newWeatherData = new weatherModel({
-            userId: user._id,
+
+        const userId = user._id
+
+        const existingWeatherData = await weatherModel.findOne({
+            userId: userId,
             city: city,
-            countryCode: weatherData.sys.country,
-            description: weatherData.weather[0].description,
-            image: weatherData.weather[0].icon,
-            temperature: Math.round(weatherData.main.temp),
-            feels_like: Math.round(weatherData.main.feels_like),
-            lat: weatherData.coord.lat,
-            lon: weatherData.coord.lon,
-            humidity: weatherData.main.humidity,
-            pressure: weatherData.main.pressure,
-            wind_speed: weatherData.wind.speed,
-            flag: flag,
+            createdAt: { $gte: new Date(Date.now() - ONE_HOUR) },
         });
 
-        await newWeatherData.save();
+        if (!existingWeatherData) {
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}&units=metric`);
+            const weatherData = await response.json();
 
-        return res.redirect(`/weather/${city}`)
-    } else {
-        res.redirect(`/weather/${city}`)
+            let flag = ''
+            try {
+                let country_info = await fetch('https://restcountries.com/v3.1/alpha/' + weatherData.sys.country);
+
+                if (!country_info.ok) {
+                    throw new Error(`Failed to fetch country information. Status: ${country_info.status}`);
+                }
+
+                country_info = await country_info.json();
+
+                flag = country_info[0].flags.png
+            } catch (error) {
+                console.error('Error fetching country information:', error);
+            }
+
+            const newWeatherData = new weatherModel({
+                userId: user._id,
+                city: city,
+                countryCode: weatherData.sys.country,
+                description: weatherData.weather[0].description,
+                image: weatherData.weather[0].icon,
+                temperature: Math.round(weatherData.main.temp),
+                feels_like: Math.round(weatherData.main.feels_like),
+                lat: weatherData.coord.lat,
+                lon: weatherData.coord.lon,
+                humidity: weatherData.main.humidity,
+                pressure: weatherData.main.pressure,
+                wind_speed: weatherData.wind.speed,
+                flag: flag,
+            });
+
+            await newWeatherData.save();
+
+            return res.redirect(`/weather/${city}`)
+        } else {
+            res.redirect(`/weather/${city}`)
+        }
+    } catch (error) {
+        console.error('Error fetching user from MongoDB:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
@@ -270,7 +282,6 @@ app.get('/history', async (req, res) => {
         const user = await userModel.findOne({ username });
 
         if (!user) {
-            // User not found, handle this case accordingly
             res.render('history', { username, weatherData: null });
             return;
         }
