@@ -18,13 +18,14 @@ const app = express();
 
 const apikey = "7a57186bf1039b3afc193c37be9da3f1"
 const ONE_HOUR = 60 * 60 * 1000
+const expire = new Date(Date.now() + ONE_HOUR);
 
 app.use(session({
     secret: 'secret-key',
     resave: false,
     saveUninitialized: true,
     cookie: {
-        maxAge: ONE_HOUR,
+        expires: expire,
     },
 }));
 
