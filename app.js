@@ -361,18 +361,19 @@ app.post('/news', async (req, res) => {
                         })),
                     });
 
-                    newNewsData.save();
+                    await newNewsData.save();
 
-                    return res.redirect(`/news/${city}`)
+                    res.redirect(`/news/${city}`);
                 } catch (error) {
                     console.error('Error saving news data to MongoDB:', error);
                     res.status(500).json({ error: 'Internal Server Error' });
                 }
             });
         });
+    } else {
+        res.redirect(`/news/${city}`);
     }
-    res.redirect(`/news/${city}`)
-});
+})
 
 app.listen(port, () => {
     console.log('server is running on port ' + port);
