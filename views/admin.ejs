@@ -37,52 +37,60 @@
                 <%= error %>
             </p>
             <% } %>
-        <form class="text-center" id="addForm">
-            <div class="form-group my-2">
-                <input type="text" id="username" class="form-control my-3" placeholder="username">
-            </div>
-            <div class="form-group my-2">
-                <input type="password" id="password" class="form-control my-3" placeholder="password">
-            </div>
-            <button type="submit" class="btn">Add user</button>
-        </form>
+                <form class="text-center" id="addForm">
+                    <div class="form-group my-2">
+                        <input type="text" id="username" class="form-control my-3" placeholder="username">
+                    </div>
+                    <div class="form-group my-2">
+                        <input type="password" id="password" class="form-control my-3" placeholder="password">
+                    </div>
+                    <button type="submit" class="btn">Add user</button>
+                </form>
     </div>
 
     <div class="container my-4" id="users">
         <h3>Users</h3>
         <ol class="list-group">
-            <% users.forEach(user => { %>
+            <% users.forEach(user=> { %>
                 <div class="row align-items-center">
-                <li class="col-7 list-entry my-2">
-                    <p>username: <%= user.username %></p>
-                    <p>password: <%= user.password %></p>
-                    <p>isAdmin: <%= user.isAdmin %></p>
-                    <p>createdAt: <%= user.createdAt %></p>
-                    <p>updatedAt: <%= user.updatedAt %></p>
-                </li>
+                    <li class="col-7 list-entry my-2">
+                        <p>username: <%= user.username %>
+                        </p>
+                        <p>password: <%= user.password %>
+                        </p>
+                        <p>isAdmin: <%= user.isAdmin %>
+                        </p>
+                        <p>createdAt: <%= user.createdAt %>
+                        </p>
+                        <p>updatedAt: <%= user.updatedAt %>
+                        </p>
+                    </li>
 
-                <form class="col-5">
-                    <div class="mb-3">                            
-                        <label class="form-label">Edit username:
-                            <input type="text" class="form-control" id="updateUser_<%= user._id%>">
-                        </label>
+                    <form class="col-5">
+                        <div class="mb-3">
+                            <label class="form-label">Edit username:
+                                <input type="text" class="form-control" id="updateUser_<%= user._id%>">
+                            </label>
 
-                        <label class="form-label">Edit password:
-                            <input type="text" class="form-control" id="updatePass_<%= user._id%>">
-                        </label>
-                    </div>
-                    <button type="button" class="btn btn-update" onclick="update('<%= user._id %>')">Update</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteUser('<%= user._id %>')">Delete user</button>
-                </form>
+                            <label class="form-label">Edit password:
+                                <input type="text" class="form-control" id="updatePass_<%= user._id%>">
+                            </label>
+                        </div>
+                        <button type="button" class="btn btn-update" onclick="update('<%= user._id %>')">Update</button>
+                        <% if (!user.isAdmin) { %>
+                            <button type="button" class="btn btn-danger" onclick="deleteUser('<%= user._id %>')">Delete
+                                user</button>
+                            <% } %>
+                    </form>
                 </div>
-            <% }) %>
+                <% }) %>
         </ol>
     </div>
 
     <%- include('footer') %>
 
-    <script src="/admin.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/admin.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 
 </html>

@@ -181,16 +181,8 @@ app.post("/update", async (req, res) => {
 
 app.post("/delete", async (req, res) => {
     const { userId } = req.body
-    const username = req.session.username
-    const admin = await userModel.findOne({ username })
 
     try {
-        const userIdObj = mongoose.Types.ObjectId(userId);
-
-        if (userIdObj.equals(admin._id)) {
-            return res.json("Cannot delete your own account");
-        }
-
         await userModel.findByIdAndDelete(userId);
         res.redirect('adminPanel');
     } catch (error) {
