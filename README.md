@@ -2,6 +2,14 @@
 
 OpenWeatherMap provides real-time weather information with map functionality. Also retrivies recent news based on the keyword you provide.
 
+## Vercel
+1. https://open-weather-map-hazel.vercel.app/
+2. https://open-weather-map-hazel.vercel.app/admin (for admin panel)
+
+username: adel
+
+password: 1234
+
 ## Setup
 
 1. **Clone the repository:**
