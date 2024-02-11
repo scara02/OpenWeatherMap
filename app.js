@@ -22,7 +22,12 @@ const ONE_HOUR = 60 * 60 * 1000
 app.use(session({
     secret: 'secret-key',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        secure: true, 
+        sameSite: 'None',
+        maxAge: ONE_HOUR,
+    },
 }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -195,15 +200,12 @@ app.post("/delete", async (req, res) => {
 
 app.get('/weather', async (req, res) => {
     const username = req.session.username
-    console.log('Session:', req.session);
-
     res.render('index', { username: username, data: null })
 })
 
 app.get('/weather/:city', async (req, res) => {
     const username = req.session.username
     const city = req.params.city
-    console.log('Session:', req.session);
 
     let weatherData = await weatherModel.findOne({ city: city })
 
@@ -215,8 +217,6 @@ app.post('/weather', async (req, res) => {
     console.log(city)
 
     const username = req.session.username
-    console.log('Session:', req.session);
-
     try {
         const user = await userModel.findOne({ username });
 
