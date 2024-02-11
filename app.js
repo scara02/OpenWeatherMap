@@ -264,22 +264,31 @@ app.post('/weather', async (req, res) => {
 });
 
 app.get('/history', async (req, res) => {
-    const username = req.session.username
-    const user = await userModel.findOne({ username })
-    const userId = user._id
+    const username = req.session.username;
+
     try {
-        const weatherData = await weatherModel.find({ userId })
+        const user = await userModel.findOne({ username });
+
+        if (!user) {
+            // User not found, handle this case accordingly
+            res.render('history', { username, weatherData: null });
+            return;
+        }
+
+        const userId = user._id;
+        const weatherData = await weatherModel.find({ userId });
 
         if (!weatherData || weatherData.length === 0) {
-            res.render('history', { username: username, weatherData: null });
+            res.render('history', { username, weatherData: null });
         } else {
-            res.render('history', { username: username, weatherData: weatherData });
+            res.render('history', { username, weatherData });
         }
     } catch (error) {
         console.error('Error fetching weather data from MongoDB:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 app.get('/news', async (req, res) => {
     const username = req.session.username
